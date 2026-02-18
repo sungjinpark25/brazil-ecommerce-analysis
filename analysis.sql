@@ -20,7 +20,7 @@ SELECT 'product_category_name_translation', COUNT(*) FROM dbo.product_category_n
 
 SELECT TOP 5 * FROM dbo.olist_orders_dataset;
 
--- 2. orders 테이블 컬럼 상세 정보
+-- orders table column details
 SELECT 
     COLUMN_NAME,
     DATA_TYPE,
@@ -30,7 +30,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'olist_orders_dataset'
 ORDER BY ORDINAL_POSITION;
 
--- 3. customers 테이블 컬럼 확인
+-- Check customers table columns
 SELECT 
     COLUMN_NAME,
     DATA_TYPE,
@@ -39,7 +39,7 @@ FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'olist_customers_dataset'
 ORDER BY ORDINAL_POSITION;
 
---1 기본 테이블 정보
+-- Basic table information
 SELECT 
     'orders' as table_name,
     COUNT(*) as row_count,
@@ -47,7 +47,7 @@ SELECT
 FROM dbo.olist_orders_dataset;
 
 
--- 주문 상태 확인
+-- Check order status
 SELECT 
     order_status,
     COUNT(*) as count,
@@ -57,7 +57,7 @@ GROUP BY order_status
 ORDER BY count DESC;
 
 
---날짜 범위 확인
+-- Check date range
 SELECT 
     MIN(order_purchase_timestamp) as first_order,
     MAX(order_purchase_timestamp) as last_order,
@@ -65,7 +65,7 @@ SELECT
 FROM dbo.olist_orders_dataset;
 
 
---월별 주문 트렌드 분석
+-- Monthly order trend analysis
 SELECT 
     FORMAT(order_purchase_timestamp, 'yyyy-MM') as year_month,
     COUNT(*) as order_count,
@@ -76,7 +76,7 @@ GROUP BY FORMAT(order_purchase_timestamp, 'yyyy-MM')
 ORDER BY year_month;
 
 
--- 결제 데이터와 연결하기
+-- Join with payment data
 SELECT TOP 10
     o.order_id,
     o.order_status,
@@ -90,7 +90,7 @@ INNER JOIN dbo.olist_order_payments_dataset p
 ORDER BY o.order_purchase_timestamp DESC;
 
 
--- 기본 매출 통계
+-- Basic revenue statistics
 SELECT 
     COUNT(DISTINCT o.order_id) as total_orders,
     COUNT(DISTINCT o.customer_id) as total_customers,
@@ -102,7 +102,7 @@ JOIN dbo.olist_order_payments_dataset p
 WHERE o.order_status = 'delivered';
 
 
---월별 매출 + 성장률 분석
+-- Monthly revenue & growth analysis
 SELECT 
     FORMAT(o.order_purchase_timestamp, 'yyyy-MM') AS month,
     SUM(p.payment_value) AS revenue,
@@ -117,7 +117,7 @@ ORDER BY month;
 
 
 
---지역별 매출 분석
+-- Revenue analysis by region
 SELECT 
     c.customer_state,
     COUNT(DISTINCT o.order_id) AS total_orders,
@@ -142,7 +142,7 @@ EXEC sp_rename
     'COLUMN';
 
 
---상품 카테고리 매출 분석
+-- Revenue analysis by product category
 
 SELECT 
     t.product_category_name_english,
@@ -156,7 +156,7 @@ GROUP BY t.product_category_name_english
 ORDER BY product_sales DESC;
 
 
---배송 성능 분석
+-- Delivery performance analysis
 SELECT 
     AVG(DATEDIFF(day, order_purchase_timestamp, order_delivered_customer_date)) AS avg_delivery_days
 FROM dbo.olist_orders_dataset
@@ -164,9 +164,6 @@ WHERE order_status = 'delivered';
 
 
 
-
-
-DROP VIEW IF EXISTS dbo.sales_master;
 
 GO
 CREATE VIEW dbo.sales_master AS
@@ -207,7 +204,8 @@ LEFT JOIN dbo.product_category_name_translation t
 WHERE o.order_status = 'delivered';
 GO
 
---view test
+-- View test
 SELECT TOP 10 * 
 FROM dbo.sales_master;
+
 
