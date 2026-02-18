@@ -113,4 +113,4 @@ Brazil-Ecommerce-Analysis/
 ## 👤 Author
 **[Your Name]**  
 McMaster University — B.Sc. Mathematics & Statistics  
-[LinkedIn](#) | [GitHub](#)
+www.linkedin.com/in/sungjinpark25| https://github.com/sungjinpark25
