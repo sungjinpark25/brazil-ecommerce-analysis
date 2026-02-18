@@ -102,15 +102,13 @@ WHERE o.order_status = 'delivered';
 ```
 Brazil-Ecommerce-Analysis/
 ├── README.md
-├── sql/
-│   └── analysis.sql
-└── dashboard/
-    └── dashboard.png
+├── analysis.sql
+└── dashboard.png
 ```
 
 ---
 
 ## 👤 Author
-**[Your Name]**  
+**Sungjin Park**  
 McMaster University — B.Sc. Mathematics & Statistics  
-www.linkedin.com/in/sungjinpark25 | https://github.com/sungjinpark25
+(www.linkedin.com/in/sungjinpark25)  | (https://github.com/sungjinpark25)
